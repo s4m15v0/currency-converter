@@ -17,3 +17,25 @@ function display(data) {
     }
 }
 
+btn.addEventListener("click", () => {
+    let currency1 = select[0].value;
+    let currency2 = select[1].value;
+    let value = num.value;
+    if (currency1 != currency2) {
+        convert(currency1, currency2, value);
+    } else {
+        alert("Choose Different Currencies !!!");
+    }
+});
+
+function convert(currency1, currency2, value) {
+    const host = "api.frankfurter.app";
+    fetch(
+        `https://${host}/latest?amount=${value}&from=${currency1}&to=${currency2}`
+    )
+        .then((val) => val.json())
+        .then((val) => {
+            console.log(Object.values(val.rates)[0]);
+            ans.value = Object.values(val.rates)[0];
+        });
+}
